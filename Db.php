@@ -8,11 +8,11 @@ class Db
 * Acciones sobre la base de datos.
 */
 
-	private static $host = "localhost";
-	private static $dbUser = "root";
-	private static $dbPwd = "";
-	private static $db = "saya";
-	private static $mysqli;
+private static $host = "localhost";
+private static $dbUser = "root";
+private static $dbPwd = "";
+private static $db = "saya";
+private static $mysqli;
 
 
 	/** conecta() -- conectamos a la base de datos definida
