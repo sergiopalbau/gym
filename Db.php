@@ -40,6 +40,7 @@ class Db
 
 	/** recuperarTabla() --  lista todos los campos de la tabla
 	* @param $tabla string -- tabla que queremos recuperar.
+	* @returm $resultado (objeto) -- devuelve objeto consulta a la base de datos
 	*/
 	public static function recuperarTabla ($tabla){
 		Db::conecta();
@@ -52,5 +53,36 @@ class Db
 
 	}
 
-	
+	/** recuperarElemento () -- recupera fila con coincidencia en el busqueda
+	* @param $tabla string -- tabla en la que buscar
+	* @param $columna string -- columna en la que mirar
+	* @param $busqueda string -- coincidencia que encontrar.
+	***********************************************************************/
+
+	public static function recuperarElemento ($tabla,$columna,$busqueda) {
+		Db::conecta();
+		$sql ="Select * From $tabla where $columna = $busqueda";
+		$m=self::$mysqli;
+		$resultado= $m->query($sql);
+		Db::cierra();
+
+		return $resultado;
+
+	}
+
+
+	/** ejecutaSentencia()-- se pasa por argumento una sentencia sql y la recupera
+	* @param $sql -string -- sentencia sql
+	* @return $resultado - objeto mysqli con el resultado
+	**************/
+
+	public static function ejecutaSentencia ($sql) {
+		Db::conecta();
+		$m=self::$mysqli;
+		$resultado= $m->query($sql);
+		Db::cierra();
+
+		return $resultado;
+
+	}
 }
