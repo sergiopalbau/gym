@@ -10,16 +10,19 @@
 
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
-
+	<?php 
+				require_once ("Db.php");
+				$rawdata =Db::arrayTabla('actividad');
+			?>
 </head>
 <body>
 
 
 	<div class="container">
 		<div class="row">
-	  
-			  <ul class="nav nav-tabs">
+	  		  <ul class="nav nav-tabs">
 			    <li><a href="index.php">Home</a></li>
 			    <li class="active"><a href="actividad.php">Actividad</a></li>
 			    <li><a href="socio.php">Socio</a></li>
@@ -28,25 +31,18 @@
 		</div>
 				
 
-		<div class="col-xs-9">
+		<div class="row">
 			<h2>Actividad</h2>
-
-			
-		
-			<?php 
-
-				require_once ("Db.php");
-				$rawdata =Db::arrayTabla('actividad');
-				
-
-			?>
-			 <table class="table table-hover">
-			    <thead >
+		</div>	
+		<div class="row">
+			<p>	Detalle de las actividades</p>
+			<table id ="example" class="table table-hover">
+			    <thead>
 			      <tr>
-			        <th class= "col-md-1">Id_Actividad</th>
-			        <th class="col-md-6">Nombre</th>
-			        <th class="col-md-1">Cuota</th>
-			        <th class="col-md-4">OPciones </th>
+			        <th class= "">Id_Actividad</th>
+			        <th class="">Nombre</th>
+			        <th class="">Cuota</th>
+			        <th class="">OPciones </th>
 			      </tr>
 			    </thead>
 			    <tbody>
@@ -75,14 +71,14 @@
 				   for($i=0;$i<$filas;$i++){
 
 				      echo "<tr>";
-				      echo "<td>". $rawdata[$i][0]. "</td>\n";
-				      echo "<td>". $rawdata[$i][1]. "</td>\n";
-				      echo "<td>". $rawdata[$i][2]. "</td>\n";
+				      echo "<td>". $rawdata[$i][0]. "</td>";
+				      echo "<td>". $rawdata[$i][1]. "</td>";
+				      echo "<td>". $rawdata[$i][2]. "</td>";
 				      
 				      echo '<td> <div class="btn-group-xs ">
-    								<button type="button" role="link"  class="btn btn-info "><span class="glyphicon glyphicon-eye-open"> VER </button>
-    								<button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-edit"> EDITAR</button>
-    								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"> BORRAR </button>
+    								<button type="button" role="link"  class="btn btn-info "><span class="glyphicon glyphicon-eye-open"></button>
+    								<button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-edit"></button>
+    								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></button>
   								  </div>	</td>\n';
 
 				      // for($j=0;$j<$columnas;$j++){
@@ -94,6 +90,8 @@
 				 echo "</tr>";
 
 			?>
+			</tbody>
+		</table>
 
 		</div>
 	</div>
@@ -102,6 +100,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 
+<script>$(document).ready(function() {
+    $('#example').dataTable({
+    language: {
+        search: "Busqueda en tabla:",
+        lengthMenu: "Elementos: _MENU_",
+        info:       "Mostrando de _START_ a _END_ de _TOTAL_ entradas",
+        paginate: {
+            first:      "<<",
+            previous:   "<",
+            next:       ">",
+            last:       ">>"
+        },
+
+    }
+});
+} );
+</script>
 </body>
 </html>

@@ -80,8 +80,8 @@ private static $mysqli;
 		Db::conecta();
 		$m=self::$mysqli;
 		$resultado= $m->query($sql);
-		echo var_dump($resultado)."<br>";
-		echo vardump ($m);
+		//echo var_dump($resultado)."<br>";
+		//echo vardump ($m);
 		Db::cierra();
 		if (!$resultado) {
     
