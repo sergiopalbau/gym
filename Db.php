@@ -80,9 +80,37 @@ private static $mysqli;
 		Db::conecta();
 		$m=self::$mysqli;
 		$resultado= $m->query($sql);
+		echo var_dump($resultado)."<br>";
+		echo vardump ($m);
 		Db::cierra();
-
+		if (!$resultado) {
+    
+    			echo "Lo sentimos, este sitio web está experimentando problemas.<br>";
+ 				
+	    		exit;
+		}
 		return $resultado;
 
 	}
+
+	public static function arrayTabla ($tabla){
+		$rawdata = array();
+		$i=0;
+		// obtenemos un objeto de la consulta
+		$resultado= Db::recuperarTabla ($tabla);
+
+		while($row = mysqli_fetch_array($resultado))
+   		{
+		       $rawdata[$i] = $row;
+		       $i++;
+		}
+		return $rawdata;
+		 
+   }
+
+
+
+
+
+	
 }

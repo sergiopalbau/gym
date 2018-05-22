@@ -17,36 +17,45 @@
 
 
 	<div class="container">
-		<h2>Actividad</h2>
-		<div class="col-md-6">
-			<form action="/action_page.php">
+		<div class="">
+	  
+			  <ul class="nav nav-tabs">
+			    <li><a href="index.php">Home</a></li>
+			    <li class="active"><a href="actividad.php">Actividad</a></li>
+			    <li><a href="socio.php">Socio</a></li>
+			    <li><a href="staff.php">Staff</a></li>
+			  </ul>
+		</div>
+				
 
+		<div class="col-xs-9">
+			<h2>Actividad</h2>
+			<form action="i_actividad.php" method="post">
 
+<!-- 
 				<div class="form-group">
 					<label for="id_act"> Identificador Actividad</label>
-					<input type="text" class="form-control" id="id_act" name="id_act">
-				</div>
+					<input type="text" class="form-control " id="id_act" name="id_act" 
+					maxlength="4" required="" placeholde="XXXN" title =" Compuesto por 3 letras y un numero ej: tkd1">
+				</div> -->
 
 				<div class="form-group">
 					<label for="nombre">Nombre</label>
-					<input type="text" id="nombre" name="nombre" class="form-control">
+					<input type="text" id="nombre" name="nombre" class="form-control"required title="Nombre de la actividad Deportiva">
 				</div>
 				<div class="form-group">
 					<label for="cuota">Cuota</label>
-					<input type="number" min="0" max="100" id="cuota" name="cuota" class="form-control">
+					<input type="number" min="0" max="100" step="any" id="cuota" name="cuota" class="form-control" required title="Precio de la actividad">
 				</div>
-				<div class="form-group">
-					<label for="cantidad">Cantidad</label>
-					<input type="number" id="cantidad" name="cantidad" class="form-control">
-				</div>
+			
 				<div class="form-group">
 
-					<label for="restriccion"><input type="checkbox" id="restriccion" name="restriccion" > &nbsp&nbsp&nbspRestriccion Horaria</label>
+					<label for="restriccion"><input type="checkbox" id="restriccion" name="restriccion" title="Marcar si la actividad va tener restriccion horaria"> &nbsp&nbsp&nbspRestriccion Horaria</label>
 
 				</div>
 				<div class="row">
 
-					<div class="col-md-3">
+					<div class="col-xs-3">
 						<select class="form-control" id="dia" placeholder="Dia">
 							<option value="Lunes">Lunes</option>
 							<option value="Martes">Martes</option>
@@ -58,24 +67,24 @@
 						</select>
 					</div>
 
-					<div class="col-md-3">
-						<div class="input-group col">
-							<input type="text" id="h_inicio" class="form-control"  placeholder="00:00" pattern="^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$" title="HH:MM" >
+					<div class="col-xs-3">
+						<div class="input-group ">
+							<input type="text" id="h_inicio" class="form-control"  placeholder="00:00"  maxlength="5" autocomplete="off"  title="HH:MM" >
 							<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
 							</span>
 						</div>
 					</div>
 
 
-					<div class="col-md-3">
+					<div class="col-xs-3">
 						<div class="input-group ">
-								<input type="text" id="h_fin"  class="form-control" placeholder="00:00" pattern="^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$" title="HH:MM">
+								<input type="text" id="h_fin"  class="form-control" placeholder="00:00" maxlength="5" autocomplete="off"  title="HH:MM">
 								<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
 							</span>
 						</div>
 					</div>
 
-					<div class="col-md-3">
+					<div class="col-xs-3">
 						<button type="button" class=" btn btn-success" id="btt_horario">Añadir Horario</button>
 					</div>
 				</div>
@@ -98,8 +107,8 @@
 				<br>
 				<br>
 
-
-				<button type="submit" class="btn btn-default">Submit</button>
+				<input type="hidden" name="horario" id="horario" required>
+				<button type="submit" id="enviar" name="enviar" class="btn btn-default">Registrar</button>
 			</form>
 		</div>
 	</div>
@@ -113,17 +122,57 @@
 	// variables globales.
 	var indice=0;
 	var horarios = new Array();
+		function valida(){
+				if (document.getElementById('restriccion').checked && horarios.length==0)
+				{
+					alert (" Actividad tiene restriccion pero no tiene horarios");
+					 event.preventDefault()
+					return false;
+				}
 
-	function addHorario () {
-			
-			var dia = document.getElementById('dia').value;
-			var h_fin = document.getElementById('h_fin').value;
-			var h_inicio= document.getElementById('h_inicio').value;
-			
-			horarios.push([[dia],[h_inicio],[h_fin]]);
-			actualizaTabla();		
 
+				if (confirm ("Desea enviar el formulario?")){
+
+				}else {
+					 event.preventDefault()
+					return false;
+				}
 		}
+
+		function addHorario () {
+				
+				var dia = document.getElementById('dia').value;
+				var h_fin = document.getElementById('h_fin').value;
+				var h_inicio= document.getElementById('h_inicio').value;
+				 //comrpobamos que se haya introducido hora
+				 if(h_fin=="" || h_inicio==""){
+				 	alert ("Campo horas vacios.");
+				 	return false;
+				 }
+				 // la hora tiene que tener un formato especifico para que lo coja la bbdd
+				 var pattern = /^((0[0-9])|(1[0-9])|(2[0-3])):[0-5][0-9]$/;
+
+				 if (!pattern.test(h_fin)){
+				 	alert ("Hora fin no cumple formato, debe ser HH:MM");
+				 	return false;
+				 }
+				 if (!pattern.test(h_inicio)){
+				 	alert ("Hora inicio no cumple formato, debe ser HH:MM");
+				 	return false;
+				 }
+
+				// añadimos el horario al array 	
+				horarios.push([[dia],[h_inicio],[h_fin]]);
+				//actualizar la tabla
+				actualizaTabla();	
+				// añadimos como json ( es un poco locura )pero ocupa menos que serializar
+				var tmp =  JSON.stringify( horarios);
+				console.log (tmp);
+				document.getElementById('horario').value=tmp;
+
+
+			}
+
 		function actualizaTabla () {
 				var cnt=0;	
 				document.getElementById('c_tabla').innerHTML="";
@@ -136,14 +185,19 @@
 			
 		}
 		function borraElemento (e){
+			if (confirm("Desea borrar elemento? " )){
+
+
 			horarios.splice(e,1);
 			actualizaTabla();
+		}
 		}	
 
 	function inicio () {
 		
 		document.getElementById("btt_horario").addEventListener ('click', addHorario);
-		
+
+		document.getElementById("enviar").addEventListener("click",valida);
 
 		
 		
