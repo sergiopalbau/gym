@@ -12,8 +12,8 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
-	<?php 
-				require_once ("Db.php");
+	<?php 		
+				require_once ("Db.php");	
 				$rawdata =Db::arrayTabla('actividad');
 			?>
 </head>
@@ -76,7 +76,7 @@
 				      echo "<td>". $rawdata[$i][2]. "</td>";
 				      
 				      echo '<td> <div class="btn-group-xs ">
-    								<button type="button" role="link"  class="btn btn-info "><span class="glyphicon glyphicon-eye-open"></button>
+				      				<a href="f_actividad.php?id_act='.$rawdata[$i][0].'&m=v" class="btn btn-info" role="button"><span class="glyphicon glyphicon-eye-open"></a>
     								<button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-edit"></button>
     								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></button>
   								  </div>	</td>\n';
@@ -88,7 +88,7 @@
 				     
 				   }
 				 echo "</tr>";
-
+				 			
 			?>
 			</tbody>
 		</table>

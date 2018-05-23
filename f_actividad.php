@@ -10,7 +10,46 @@
 
 	<!-- Bootstrap -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+	
 
+	<?php 
+		// elegios el modo en presentar el formulario vista, editar, nuevo	
+		$vista="";
+		$nombre="";
+		$cuota="";
+		$restriccion="";
+		$horario="";
+		if (isset ($_GET['id_act']))
+		{
+			$vista=$_GET['m'];
+			if ($vista=='v'){		//modo ver
+
+			 $vista = "hide";;
+			}
+			// si mandamos por get una id. la buscamos en la base de datos,
+			require_once ("Db.php");
+			 $rawData=Db::ArrayElemento ("actividad","id_act",$_GET['id_act']);
+			 if (is_null($rawData))
+			 {
+			 	echo "</head><body><h1> El elemento que busca no existe</h1><br><br><a href='p_actividad.php'>[Volver]</a></body></html>";
+			 	exit;
+			 }
+			// esto hay que borrar
+			
+			print_r($rawData);	
+			//--------------------
+
+			$nombre =$rawData['nombre'];
+			$cuota = $rawData['cuota'];
+			$horario=$rawData['horario'];
+			if ($rawData['restriccion']!="0") {
+				$restriccion = "checked";
+
+			}
+
+		}
+
+	?>
 
 </head>
 <body>
@@ -41,19 +80,19 @@
 
 				<div class="form-group">
 					<label for="nombre">Nombre</label>
-					<input type="text" id="nombre" name="nombre" class="form-control"required title="Nombre de la actividad Deportiva">
+					<input type="text" id="nombre" name="nombre" class="form-control"required title="Nombre de la actividad Deportiva" value="<?php echo $nombre;?>">
 				</div>
 				<div class="form-group">
 					<label for="cuota">Cuota</label>
-					<input type="number" min="0" max="100" step="any" id="cuota" name="cuota" class="form-control" required title="Precio de la actividad">
+					<input type="number" min="0" max="100" step="any" id="cuota" name="cuota" class="form-control" required title="Precio de la actividad" value="<?php echo $cuota;?>">
 				</div>
 			
 				<div class="form-group">
 
-					<label for="restriccion"><input type="checkbox" id="restriccion" name="restriccion" title="Marcar si la actividad va tener restriccion horaria"> &nbsp&nbsp&nbspRestriccion Horaria</label>
+					<label for="restriccion"><input type="checkbox" id="restriccion" name="restriccion" title="Marcar si la actividad va tener restriccion horaria" <?php echo $restriccion; ?>> &nbsp&nbsp&nbspRestriccion Horaria</label>
 
 				</div>
-				<div class="row">
+				<div class="row <?php echo $vista;?>">  <!-- en funcion de los parametros se muestra o no -->
 
 					<div class="col-xs-3">
 						<select class="form-control" id="dia" placeholder="Dia">
@@ -108,10 +147,24 @@
 				<br>
 
 				<input type="hidden" name="horario" id="horario" required>
-				<button type="submit" id="enviar" name="enviar" class="btn btn-default">Registrar</button>
+				<?php 
+					// si estamos en cualquier modo que no sea vista lo presentamos el boton, de otroa forma lo deshabilitamos
+					if ($vista="") {
+
+				?>		
+				<button type="submit" id="enviar" name="enviar" class="btn btn-default <?php echo $vista ?>">Registrar</button>
+				<?php }else { ?>
+					<a class="btn btn-default" href="<?=$_SERVER['HTTP_REFERER'] ?>">Volver</a>
+				<?php }
+
+
+				?>
 			</form>
 		</div>
 	</div>
+
+
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -166,7 +219,7 @@
 				//actualizar la tabla
 				actualizaTabla();	
 				// añadimos como json ( es un poco locura )pero ocupa menos que serializar
-				var tmp =  JSON.stringify( horarios);
+				var tmp =  JSON.stringify(horarios);
 				console.log (tmp);
 				document.getElementById('horario').value=tmp;
 
@@ -190,22 +243,37 @@
 
 			horarios.splice(e,1);
 			actualizaTabla();
-		}
+			}
 		}	
 
 	function inicio () {
 		
-		document.getElementById("btt_horario").addEventListener ('click', addHorario);
+		//document.getElementById("btt_horario").addEventListener ('click', addHorario);
 
-		document.getElementById("enviar").addEventListener("click",valida);
+		//document.getElementById("enviar").addEventListener("click",valida);
+		
+		// conseguir los datos del servidor horarios en modo vista /editar
+		
+		//var horario_tmp = <?php echo $horario?>;
+		
+
+		console.log  ("Estamos mostrando:"+"<?php echo $horario ?>");
+
+		// if (Array.isArray(horario_tmp) ) {
+		// 	//horarios = JSON.parse(horario_tmp);
+		// 	horarios= horario_tmp;
+			
+		// 	actualizaTabla();
+		// }
+		// alert ("fuera")
+	}
 
 		
 		
 
 		
-}
-
 
 </script>
+
 </body>
 </html>

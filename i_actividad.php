@@ -6,9 +6,14 @@
 </head>
 <body>
 	<?php
-
+	// si en el formulario no se selecciono la restriccion .... no la mandra asi la forzamos a guardar en la bbdd
 	if ($_POST){
-		$res=1;
+		if (isset($_POST['restriccion']))
+		{
+			$res=0;
+		}else{
+			$res=1;
+		}
 		print_r($_POST);
 		echo "<br>";
 		require_once ("Db.php");
