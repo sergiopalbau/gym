@@ -77,7 +77,7 @@
 				      
 				      echo '<td> <div class="btn-group-xs ">
 				      				<a href="f_actividad.php?id_act='.$rawdata[$i][0].'&m=v" class="btn btn-info" role="button"><span class="glyphicon glyphicon-eye-open"></a>
-    								<button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-edit"></button>
+    								<a href="f_actividad.php?id_act='.$rawdata[$i][0].'&m=e"  class="btn btn-primary " role="button"><span class="glyphicon glyphicon-edit"></a>
     								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></button>
   								  </div>	</td>\n';
 
@@ -94,6 +94,7 @@
 		</table>
 
 		</div>
+		<a href="f_actividad.php" class="btn btn-success" role="button"> Añadir actividad</a>
 	</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -43,11 +43,11 @@ private static $mysqli;
 	* @returm $resultado (objeto) -- devuelve objeto consulta a la base de datos
 	*/
 	public static function recuperarTabla ($tabla){
-		Db::conecta();
+		self::conecta();
 		$sql ="Select * From $tabla";
 		$m=self::$mysqli;
 		$resultado= $m->query($sql);
-		Db::cierra();
+		self::cierra();
 
 		return $resultado;
 
@@ -60,11 +60,11 @@ private static $mysqli;
 	***********************************************************************/
 
 	public static function recuperarElemento ($tabla,$columna,$busqueda) {
-		Db::conecta();
+		self::conecta();
 		$sql ="Select * From $tabla where $columna = $busqueda";
 		$m=self::$mysqli;
 		$resultado= $m->query($sql);
-		Db::cierra();
+		self::cierra();
 
 		return $resultado;
 
@@ -77,7 +77,7 @@ private static $mysqli;
 	**************/
 
 	public static function ejecutaSentencia ($sql) {
-		Db::conecta();
+		self::conecta();
 		$m=self::$mysqli;
 		$resultado= $m->query($sql);
 		//echo var_dump($resultado)."<br>";

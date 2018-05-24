@@ -14,18 +14,28 @@
 
 	<?php 
 		// elegios el modo en presentar el formulario vista, editar, nuevo	
-		$vista="";
-		$nombre="";
-		$cuota="";
-		$restriccion="";
-		$horario="";
-		if (isset ($_GET['id_act']))
-		{
+		$vista="form";		// segun se pase por get puede haber 3 modos, formulario(form), editar(edit), o vista ()
+		
+		$nombre="";		//nombre de la actividad
+		$cuota="";		//precio de la actividad
+		$restriccion="";	//restrinccion horario
+		$horario="form";	//json con horarios
+
+		$btt_ctrl="";	// estado de los botones enabled/disabled
+		$div_ctrl="";	// ocultamiento de div hide
+		if (isset ($_GET['id_act'])){
+			
 			$vista=$_GET['m'];
 			if ($vista=='v'){		//modo ver
 
-			 $vista = "hide";;
+				 $vista = "vista";
+				 $btt_ctrl="disabled";
+				 $div_ctrl="hide";
+
+			}elseif ($vista="e"){
+				$vista="editar";
 			}
+
 			// si mandamos por get una id. la buscamos en la base de datos,
 			require_once ("Db.php");
 			 $rawData=Db::ArrayElemento ("actividad","id_act",$_GET['id_act']);
@@ -41,7 +51,15 @@
 
 			$nombre =$rawData['nombre'];
 			$cuota = $rawData['cuota'];
-			$horario=$rawData['horario'];
+			// si no ha sido definido el horario lo devuelve como null y luego js se hace la picha un lio
+			if ($rawData['horario']=="")
+			{
+				$horario=null;
+			}else
+			{
+				$horario=$rawData['horario'];
+			}
+
 			if ($rawData['restriccion']!="0") {
 				$restriccion = "checked";
 
@@ -92,7 +110,7 @@
 					<label for="restriccion"><input type="checkbox" id="restriccion" name="restriccion" title="Marcar si la actividad va tener restriccion horaria" <?php echo $restriccion; ?>> &nbsp&nbsp&nbspRestriccion Horaria</label>
 
 				</div>
-				<div class="row <?php echo $vista;?>">  <!-- en funcion de los parametros se muestra o no -->
+				<div class="row <?php echo $div_ctrl;?>">  <!-- en funcion de los parametros se muestra o no -->
 
 					<div class="col-xs-3">
 						<select class="form-control" id="dia" placeholder="Dia">
@@ -124,17 +142,17 @@
 					</div>
 
 					<div class="col-xs-3">
-						<button type="button" class=" btn btn-success" id="btt_horario">Añadir Horario</button>
+						<button type="button" class=" btn btn-success" id="btt_horario" <?php echo $btt_ctrl?>>Añadir Horario</button>
 					</div>
 				</div>
 				<br>
 				<table class="table table-bordered">
 					<thead>
 						<tr >
-							<th class="col-md-3">Dia</th>
-							<th class="col-md-3">H.inicio</th>
-							<th class="col-md-3">H.fin</th>
-							<th class="col-md-3"></th>
+							<th class="col">Dia</th>
+							<th class="col">H.inicio</th>
+							<th class="col">H.fin</th>
+							<th class="col hide"></th>
 						</tr>
 					</thead>
 					<tbody id="c_tabla">
@@ -149,12 +167,18 @@
 				<input type="hidden" name="horario" id="horario" required>
 				<?php 
 					// si estamos en cualquier modo que no sea vista lo presentamos el boton, de otroa forma lo deshabilitamos
-					if ($vista="") {
+					if ($vista=="form") {
 
 				?>		
-				<button type="submit" id="enviar" name="enviar" class="btn btn-default <?php echo $vista ?>">Registrar</button>
-				<?php }else { ?>
+				<button type="submit" id="enviar" name="enviar" class="btn btn-default">Registrar</button>
+				<?php }elseif( $vista=="vista") { ?>
 					<a class="btn btn-default" href="<?=$_SERVER['HTTP_REFERER'] ?>">Volver</a>
+				<?php }elseif ( $vista=="editar"){?>
+					<input type="hidden" name="actualiza" value="<?php echo $_GET['id_act'] ?>">
+					<button type="submit" id="enviar" name="enviar" class="btn btn-default">Registrar</button>
+					<a class="btn btn-default" href="<?=$_SERVER['HTTP_REFERER'] ?>">Volver</a>
+
+
 				<?php }
 
 
@@ -175,6 +199,8 @@
 	// variables globales.
 	var indice=0;
 	var horarios = new Array();
+	var modo="x";
+	var btt_ctrl="";
 		function valida(){
 				if (document.getElementById('restriccion').checked && horarios.length==0)
 				{
@@ -231,7 +257,7 @@
 				document.getElementById('c_tabla').innerHTML="";
 				horarios.forEach (function (i) {
 					
-					var fila = "<tr><td>"+i[0]+"</td><td>"+i[1]+"</td><td>"+i[2]+"</td><td><button type='button' class='btn btn-danger btn-sm btn-block' onClick='borraElemento("+cnt+")'>borrar</button></td></tr>";
+					var fila = "<tr><td>"+i[0]+"</td><td>"+i[1]+"</td><td>"+i[2]+"</td><td class='" + btt_ctrl + "'><button type='button' class='btn btn-danger btn-sm btn-block'  onClick='borraElemento("+cnt+")'>borrar</button></td></tr>";
 					document.getElementById('c_tabla').innerHTML += fila;	
 					cnt++;	
 				});
@@ -248,16 +274,41 @@
 
 	function inicio () {
 		
-		//document.getElementById("btt_horario").addEventListener ('click', addHorario);
-
-		//document.getElementById("enviar").addEventListener("click",valida);
 		
-		// conseguir los datos del servidor horarios en modo vista /editar
 		
-		//var horario_tmp = <?php echo $horario?>;
 		
 
-		console.log  ("Estamos mostrando:"+"<?php echo $horario ?>");
+		// valido para el modo vista /editar recuperamos los datos del servidor	
+
+		horario_tmp = '<?php echo $horario;?>' ;
+		modo= ( '<?php echo $vista;?>');
+		console.log ("modo= "+ modo);
+
+		if (modo=="form" || modo=="editar")
+		{
+			// si no ha cargado nada desde php es sum modo por defecto. modo formulario
+			modo="form";
+			document.getElementById("btt_horario").addEventListener ('click', addHorario);
+			document.getElementById("enviar").addEventListener("click",valida);
+
+		}else if (modo=="vista"){
+			btt_ctrl="hide";
+			if (horario_tmp == ""){
+					console.log ("no hay horario");
+			}else{
+				horario_tmp = JSON.parse(horario_tmp);
+				horarios= horario_tmp;
+				actualizaTabla();
+			}
+		}
+	}
+		// if (Array.isArray(horario_tmp)) { 
+			
+		// }else{
+		// 	console.log ("no es un array");
+		// }
+
+		/*//console.log  ("Estamos mostrando:"+'<?php echo $horario ?>');
 
 		// if (Array.isArray(horario_tmp) ) {
 		// 	//horarios = JSON.parse(horario_tmp);
@@ -266,7 +317,7 @@
 		// 	actualizaTabla();
 		// }
 		// alert ("fuera")
-	}
+	}*/
 
 		
 		
