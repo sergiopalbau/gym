@@ -16,13 +16,28 @@
     // elegios el modo en presentar el formulario vista, editar, nuevo  
     $vista="form";    // segun se pase por get puede haber 3 modos, formulario(form), editar(edit), o vista ()
     
-    
+    //variables globales
+
+      $dni_socio="";
+      $nombre="";
+      $apellido1="";
+      $apellido2="";
+      $direccion="";
+      $telefono="";
+      $email="";
+      $fecha_nacimiento="";
+      $fecha_inscripcion="";
+      $cuota="";
+      $corriente_pago="";
+      $uid3="";
+      $uri_foto="";
 
 
-    $horario="form";  //json con horarios
+ 
     $habilitacion="disabled" ;//para el formulario de activdades
     $btt_ctrl=""; // estado de los botones enabled/disabled
     $div_ctrl=""; // ocultamiento de div hide
+    $readOnly="";
     if (isset ($_GET['dni_socio'])){
       
       $vista=$_GET['m'];
@@ -34,6 +49,8 @@
 
       }elseif ($vista="e"){
         $vista="editar";
+        $habilitacion="";
+        $readOnly="readonly";
       }
 
       // si mandamos por get una id. la buscamos en la base de datos,
@@ -47,22 +64,39 @@
       // esto hay que borrar
       
       print_r($rawData2);  
-            //--------------------
-      if (isset($_GET['dni_socio'])) $ =$_GET['dni_socio'] else $dni_socio ="";
-      if (isset($_GET['nombre'])) $ =$_GET['nombre'] else $nombre="";
-      if (isset($_GET['apellido1'])) $ =$_GET['apellido1'] else $apellido1="";
-      if (isset($_GET['apellido2'])) $ =$_GET['apellido2'] else $apellido2="";
-      if (isset($_GET['direccion'])) $ =$_GET['direccion'] else $direccion="";
-      if (isset($_GET['telefono'])) $ =$_GET['telefono'] else $telefono="";
-      if (isset($_GET['email'])) $ =$_GET['email'] else $email="";
-      if (isset($_GET['fecha_nacimiento'])) $ =$_GET['fecha_nacimiento'] else $fecha_nacimiento="";
-      if (isset($_GET['fecha_inscripcion'])) $ =$_GET['fecha_inscripcion'] else $fecha_inscripcion="";
-      if (isset($_GET['cuota'])) $ =$_GET['cuota'] else $cuota="";
-      if (isset($_GET['corriente_pago'])) $ =$_GET['corriente_pago'] else $corriente_pago="";
-      if (isset($_GET['uid3'])) $ =$_GET['uid3'] else $uid3="";
-      if (isset($_GET['uri_foto'])) $ =$_GET['uri_foto'] else $uri_foto="";
+      //--------------------
+      /* desmierde total ---- si ha datos los cargamos en su variable para mostrar en el formulario */
+      if (isset($rawData2['dni_socio'])){ $dni_socio =$rawData2['dni_socio']; }else {$dni_socio ="";};
+      if (isset($rawData2['nombre'])){ $nombre =$rawData2['nombre']; }else {$nombre="";};
+      if (isset($rawData2['apellido1'])){ $apellido1 =$rawData2['apellido1']; }else {$apellido1="";};
+      if (isset($rawData2['apellido2'])){ $apellido2 =$rawData2['apellido2']; }else {$apellido2="";};
+      if (isset($rawData2['direccion'])){ $direccion =$rawData2['direccion']; }else {$direccion="";};
+      if (isset($rawData2['telefono'])){ $telefono =$rawData2['telefono']; }else {$telefono="";};
+      if (isset($rawData2['email'])){ $email =$rawData2['email'];} else{ $email="";};
+      if (isset($rawData2['fecha_nacimiento'])){ $fecha_nacimiento =$rawData2['fecha_nacimiento'];} else{ $fecha_nacimiento="";};
+      if (isset($rawData2['fecha_inscripcion'])){ $fecha_inscripcion =$rawData2['fecha_inscripcion']; }else {$fecha_inscripcion="";};
+      if (isset($rawData2['cuota'])){ $cuota =$rawData2['cuota'];} else{ $cuota="";};
+      if (isset($rawData2['corriente_pago'])){ $corriente_pago =$rawData2['corriente_pago']; }else {$corriente_pago="";};
+      if (isset($rawData2['uid3'])){ $uid3 =$rawData2['uid3'];} else{ $uid3="";};
+      if (isset($rawData2['uri_foto'])){ $uri_foto =$rawData2['uri_foto'] ;}else {$uri_foto="";};
 }
-      
+      //--------------------------------------
+      //depurar/*
+/*
+      echo "<br>$dni_socio ";
+      echo "<br>$nombre ";
+      echo "<br>$apellido1 ";
+     echo "<br> $apellido2 ";
+      echo "<br>$direccion ";
+      echo "<br>$telefono ";
+     echo "<br> $email ";
+     echo "<br> $fecha_nacimiento ";
+     echo "<br> $fecha_inscripcion ";
+     echo "<br> $cuota ";
+     echo "<br> $corriente_pago ";
+     echo "<br> $uid3 ";
+     echo "<br> $uri_foto ";
+     */
 
   ?>
 
@@ -97,25 +131,25 @@
              <div class="row">
                 <div class="form-group col-xs-2 ">
                    <label for="dni"> Dni</label>
-                   <input  class="form-control" type="text" id="dni" name="dni"size="20">
+                   <input  class="form-control" type="text" id="dni" name="dni"size="20" value="<?php echo $dni_socio;?>" <?php echo $readOnly; ?>>
                </div>
                 <div class="form-group col-xs-3 col-md-offset-2">
                    <label for="fecha_nacimiento"> Fecha nacimiento</label>
-                   <input  class="form-control" type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+                   <input  class="form-control" type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $fecha_nacimiento;?>">
                </div>
              </div>
               <div class="row">
                 <div class="form-group col-xs-4">
                     <label for="nombre">Nombre</label>
-                    <input class="form-control" type="text" id="nombre" name="nombre">
+                    <input class="form-control" type="text" id="nombre" name="nombre" value="<?php echo    $nombre;?>">
                 </div>
                              <div class="form-group col-xs-4">
                  <label for="Apellido1">Apellido1</label>
-                 <input type="text" class="form-control" name="apellido1"  id="apellido1">
+                 <input type="text" class="form-control" name="apellido1"  id="apellido1" value="<?php echo $apellido1;?>">
                              </div>
                              <div class="form-group col-xs-4">
                  <label for="Apellido2">Apellido2</label>
-                 <input type="text" name="apellido2"  id="apellido2"class="form-control">
+                 <input type="text" name="apellido2"  id="apellido2"class="form-control" value="<?php echo $apellido2;?>">
                              </div>
               </div>
 
@@ -134,17 +168,17 @@
        <div class="row">
           <div class="form-group col-xs-4">
             <label for="Direccion">Direccion</label>
-            <input type="text" id="direccion" name="direccion" class="form-control">
+            <input type="text" id="direccion" name="direccion" class="form-control" value="<?php echo $direccion;?>">
          </div>
       
     
           <div class="form-group col-xs-4">        
                <label for="email">email:</label>
-               <input type="email" class="form-control" id="email" name="email">
+               <input type="email" class="form-control" id="email" name="email" value="<?php echo $email;?>">
           </div>
           <div class="form-group col-xs-4">
               <label for="telefono">Telefono</label>
-              <input type="tel" class="form-control" id="telefono" name="telefono">
+              <input type="tel" class="form-control" id="telefono" name="telefono" value="<?php echo $telefono;?>">
           </div>
 
         </div>
@@ -153,9 +187,9 @@
      <fieldset>
        <legend>Relacion con club</legend>
        <div class="row">
-            <div class="form-group col-xs-2"><label for="fecha_inscripcion">fecha_inscripcion</label><input type="date" id="fecha_inscripcion" name="fecha_inscripcion" class="form-control"></div>
-            <div class="form-group col-xs-2"><label for="tarjeta">tarjeta</label><input type="text" id="tarjeta" name="tarjeta" class="form-control"></div>
-            <div class="form-group col-xs-1"><label for="cuota">cuota</label><input type="text" id="cuota" name="cuota" class="form-control"></div>
+            <div class="form-group col-xs-2"><label for="fecha_inscripcion">fecha_inscripcion</label><input type="date" id="fecha_inscripcion" name="fecha_inscripcion" class="form-control" value="<?php echo $fecha_inscripcion;?>"></div>
+            <div class="form-group col-xs-2"><label for="tarjeta">tarjeta</label><input type="text" id="tarjeta" name="tarjeta" class="form-control" value="<?php echo $uid3;?>"></div>
+            <div class="form-group col-xs-1"><label for="cuota">cuota</label><input type="text" id="cuota" name="cuota" class="form-control" value="<?php echo $cuota;?>"></div>
              <div class="form-group col-xs-2"><label for="restriccion">Restriccion</label>
               <select class="form-control select-picker" id="restriccion" name="restriccion">
                 <option value="0" selected>no</option>
@@ -220,8 +254,31 @@
         <br>
         <br>
         <br>
-        <div class="row">
-        <button type="submit" id="enviar" class="btn btn-default">Submit</button>
+ <div class="row">
+        <!-- ---------------------- -->
+  <?php 
+          // si estamos en cualquier modo que no sea vista lo presentamos el boton, de otroa forma lo deshabilitamos
+          if ($vista=="form") {
+
+        ?>    
+        <button type="submit" id="enviar" name="enviar" class="btn btn-default">Registrar</button>
+        <?php }elseif( $vista=="vista") { ?>
+          <a class="btn btn-default" href="<?=$_SERVER['HTTP_REFERER'] ?>">Volver</a>
+        <?php }elseif ( $vista=="editar"){?>
+          <input type="hidden" name="actualiza" value="<?php echo $_GET['dni_socio'] ?>">
+          <button type="submit" id="enviar" name="enviar" class="btn btn-default">Registrar</button>
+          <a class="btn btn-default" href="<?=$_SERVER['HTTP_REFERER'] ?>">Volver</a>
+
+
+        <?php }
+
+
+        ?>
+
+
+
+       
+      <!--   <button type="submit" id="enviar" class="btn btn-default">Submit</button> -->
         </div>
 </form>
 
