@@ -12,9 +12,10 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
-	<?php 		
+	<?php		
 				require_once ("Db.php");	
-				$rawdata =Db::arrayTabla('actividad');
+				$rawdata =Db::arrayTabla('socios');
+				
 			?>
 </head>
 <body>
@@ -24,32 +25,32 @@
 		<div class="row">
 	  		  <ul class="nav nav-tabs">
 			    <li><a href="index.php">Home</a></li>
-			    <li class="active"><a href="p_actividad.php">Actividad</a></li>
-			    <li><a href="p_socio.php">Socio</a></li>
+			    <li ><a href="p_actividad.php">Actividad</a></li>
+			    <li class="active"><a href="p_socio.php">Socio</a></li>
 			    <li><a href="staff.php">Staff</a></li>
 			  </ul>
 		</div>
 				
 
 		<div class="row">
-			<h2>Actividad</h2>
+			<h2>Socio</h2>
 		</div>	
 		<div class="row">
-			<p>	Detalle de las actividades</p>
+			<p>	Detalle de los Socios</p>
 			<table id ="example" class="table table-hover">
 			    <thead>
 			      <tr>
-			        <th class= "">Id_Actividad</th>
+			        <th class= "">Id_socio</th>
 			        <th class="">Nombre</th>
-			        <th class="">Cuota</th>
-			        <th class="">OPciones </th>
+			        <th class="">Tarjeta</th>
+			        <th class="">Opciones </th>
 			      </tr>
 			    </thead>
 			    <tbody>
 
 
 			<?php
-
+				if (!count ($rawdata)==0){
 
 				//DIBUJAMOS LA TABLA
 								   
@@ -76,8 +77,8 @@
 				      echo "<td>". $rawdata[$i][2]. "</td>";
 				      
 				      echo '<td> <div class="btn-group-xs ">
-				      				<a href="f_actividad.php?id_act='.$rawdata[$i][0].'&m=v" class="btn btn-info" role="button"><span class="glyphicon glyphicon-eye-open"></a>
-    								<a href="f_actividad.php?id_act='.$rawdata[$i][0].'&m=e"  class="btn btn-primary " role="button"><span class="glyphicon glyphicon-edit"></a>
+				      				<a href="f_socio.php?dni_socio='.$rawdata[$i][0].'&m=v" class="btn btn-info" role="button"><span class="glyphicon glyphicon-eye-open"></a>
+    								<a href="f_socio.php?dni_socio='.$rawdata[$i][0].'&m=e"  class="btn btn-primary " role="button"><span class="glyphicon glyphicon-edit"></a>
     								<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></button>
   								  </div>	</td>\n';
 
@@ -88,13 +89,14 @@
 				     
 				   }
 				 echo "</tr>";
+				}
 				 			
 			?>
 			</tbody>
 		</table>
 
 		</div>
-		<a href="f_actividad.php" class="btn btn-success" role="button"> Añadir actividad</a>
+		<a href="f_socio.php" class="btn btn-success" role="button"> Añadir socio</a>
 	</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -82,13 +82,14 @@ private static $mysqli;
 		$resultado= $m->query($sql);
 		//echo var_dump($resultado)."<br>";
 		//echo vardump ($m);
-		self::cierra();
+		
 		if (!$resultado) {
     
-    			echo "Lo sentimos, este sitio web está experimentando problemas.<br>";
- 				
+    			echo "<br>Lo sentimos, este sitio web está experimentando problemas.<br>";
+ 				echo "<br>". $m->errno . "-" . $m->error;
 	    		exit;
 		}
+		self::cierra();
 		return $resultado;
 
 	}

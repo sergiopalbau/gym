@@ -46,7 +46,7 @@
 			 }
 			// esto hay que borrar
 			
-			print_r($rawData);	
+			//print_r($rawData);	
 			//--------------------
 
 			$nombre =$rawData['nombre'];
@@ -78,8 +78,8 @@
 	  
 			  <ul class="nav nav-tabs">
 			    <li><a href="index.php">Home</a></li>
-			    <li class="active"><a href="actividad.php">Actividad</a></li>
-			    <li><a href="socio.php">Socio</a></li>
+			    <li class="active"><a href="p_actividad.php">Actividad</a></li>
+			    <li><a href="p_socio.php">Socio</a></li>
 			    <li><a href="staff.php">Staff</a></li>
 			  </ul>
 		</div>
