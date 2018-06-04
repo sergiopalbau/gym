@@ -62,6 +62,8 @@ private static $mysqli;
 	public static function recuperarElemento ($tabla,$columna,$busqueda) {
 		self::conecta();
 		$sql ="Select * From $tabla where $columna = $busqueda";
+
+		//echo "<hr>". $sql . "<hr>";
 		$m=self::$mysqli;
 		$resultado= $m->query($sql);
 		self::cierra();
@@ -112,14 +114,36 @@ private static $mysqli;
    public static function arrayElemento ($tabla,$columna,$busqueda)
    {
    		//$rawdata =array();
+   		//$i=0;
    		$resultado =self::recuperarElemento ($tabla,$columna,$busqueda);
    		$row = mysqli_fetch_array($resultado);
+
    		//var_dump($row);
+ 		 //  		while($row = mysqli_fetch_array($resultado))
+		  //  		{
+		//        $rawdata[$i] = $row;
+		//        $i++;
+		// }
    		return  $row;
    }
 
 
+   public static function arrayBusqueda ($tabla,$columna,$busqueda)
+   {
+   		$rawdata =array();
+   		$i=0;
+   		$resultado =self::recuperarElemento ($tabla,$columna,$busqueda);
+   		//$row = mysqli_fetch_array($resultado);
+ 	
+ 		while($row = mysqli_fetch_array($resultado))
+		 {
+		    $rawdata[$i] = $row;
+		     $i++;
+		}
 
+		//var_dump($rawdata);
+   		return  $rawdata;
+   }
 
 
 	
