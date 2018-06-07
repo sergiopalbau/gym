@@ -25,12 +25,15 @@ if (isset ($_POST['dni']))
 		// lo convertimos en un array
 		$actividad = explode (",",$actividad);
 		//print_r($actividad);
+		print_r ($actividad);
 
 	}else{
 		$actividad="";
 
 	}
 	
+
+	//06/06/2015-----------------------------------------------------
 	// buscamos todas las entradas para el dni
 	require_once("Db.php");
 	
@@ -38,7 +41,9 @@ if (isset ($_POST['dni']))
 	echo "<br>   <hr>";
 	// busqueda de las actividades por dni
 	$act_bbdd = Db::arrayBusqueda("act_socios","dni_socio",$dni);
-	// comprobamos si ha devuelto valores la busqueda
+	var_dump ($act_bbdd);
+
+	// comprobamos si ha devuelto valores la busqueda, si no devuelve nada inplica que es la primera vez que se esta grabando.
 	if (count($act_bbdd)==0){
 		for ($i=0; $i<count($actividad); $i++)
 		{
@@ -47,9 +52,11 @@ if (isset ($_POST['dni']))
 														'$dni',
 														'$fecha',
 														'')";
-			echo $sql;
+			echo "<br>" .$sql . "<br>";
 			$respuesta =Db::ejecutaSentencia($sql);
-			echo $respuesta;
+			if ($respuesta==1) {
+				echo "Actividad guardada correctamente";
+			}
 		}
 
 	}else{
@@ -62,26 +69,36 @@ if (isset ($_POST['dni']))
 		echo "/".$actividad[$i] . "/";
 		for ($j=0; $j<count($act_bbdd); $j++)
 		{
-			
+			if ($act_bbdd[$j]['f_fin']!="0000-00-00") // si la actividad tiene fecha fin, no hace falta comprobar nada
+			{
+				continue 2;	
+			}
 			if ($actividad[$i] == $act_bbdd[$j]['id_act'])
 			{
-				echo "soy igual  " .$actividad[$i]. "-".  $act_bbdd[$j]['id_act'] . $act_bbdd[$j]['f_fin'] . "<br>";
-				if ($act_bbdd[$j]['f_fin']!="0000-00-00")
-				{
-					//tenemos que añadir a la bbdd
-					$sql = "INSERT into act_socio values ('', 	
-														'$actividad[$i]',
-														'$dni',
-														'$fecha',
-														''";
-					$respuesta =Db::ejecutaSentencia($sql);
-					echo $respuesta;
-
-				}
+				continue 2;
 			}
+				// echo "soy igual  " .$actividad[$i]. "-".  $act_bbdd[$j]['id_act'] . $act_bbdd[$j]['f_fin'] . "<br>";
+				// if ($act_bbdd[$j]['f_fin']!="0000-00-00")
+				// {
+				
+
+		}
+		// si llega aqui implica que no hay coincidencias con esa actividad. hay que añadir a la tabla
+		//tenemos que añadir a la bbdd
+			$sql = "INSERT into act_socios values ('', 	
+												'$actividad[$i]',
+												'$dni',
+												'$fecha',
+												'')";
+			echo "<hr><br> $sql <hr><br>"	;	
+			$respuesta =Db::ejecutaSentencia($sql);
+			
 		}
 	}
-}
+/*}--------------------------------------------------*/
+//07/06/2018-----------------------------------------
+// Como n podemos borrar las actividades si podemos darle fecha de finalizacion. esta rutina se encarga de eso.
+
 
 /*
 	//$fechaI= date
@@ -108,8 +125,8 @@ if ($_REQUEST)
 }else {
 	echo "no hay datos";
 }*/
-/*
-<!-- 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,14 +135,13 @@ if ($_REQUEST)
 </head>
 <body>
 	<form action="i_act_socio.php" method="post">
-		<input type="hidden" name="dni" value="714298642">
-
+		<input type="hidden" name="dni" value="111">
+		<input type="hidden" name="actividad" value="['1','4','5']">
 
 		<input type="submit">
 	</form>
 	<a href="/phpmyadmin">phpmyadmin
 	</a>
 </body>
-</html> -->*/
+</html>
 
-?>

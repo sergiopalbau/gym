@@ -27,7 +27,7 @@
     $email="";
     $fecha_nacimiento="";
     $fecha_inscripcion="";
-    $cuota="";
+    $cuota="0";
     $corriente_pago="";
     $uid3="";
     $uri_foto="";
