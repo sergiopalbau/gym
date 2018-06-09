@@ -244,10 +244,7 @@
 				horarios.push([[dia],[h_inicio],[h_fin]]);
 				//actualizar la tabla
 				actualizaTabla();	
-				// añadimos como json ( es un poco locura )pero ocupa menos que serializar
-				var tmp =  JSON.stringify(horarios);
-				console.log (tmp);
-				document.getElementById('horario').value=tmp;
+				
 
 
 			}
@@ -261,6 +258,10 @@
 					document.getElementById('c_tabla').innerHTML += fila;	
 					cnt++;	
 				});
+				// añadimos como json ( es un poco locura )pero ocupa menos que serializar
+				var tmp =  JSON.stringify(horarios);
+				console.log (tmp);
+				document.getElementById('horario').value=tmp;
 			
 		}
 		function borraElemento (e){
@@ -273,18 +274,14 @@
 		}	
 
 	function inicio () {
-		
-		
-		
-		
-
+	
 		// valido para el modo vista /editar recuperamos los datos del servidor	
 
 		horario_tmp = '<?php echo $horario;?>' ;
 		modo= ( '<?php echo $vista;?>');
 		console.log ("modo= "+ modo);
 
-		if (modo=="form" || modo=="editar")
+		if (modo=="form" )	//|| modo=="editar"
 		{
 			// si no ha cargado nada desde php es sum modo por defecto. modo formulario
 			modo="form";
@@ -300,6 +297,18 @@
 				horarios= horario_tmp;
 				actualizaTabla();
 			}
+		}else if (modo=="editar")
+		{
+			document.getElementById("btt_horario").addEventListener ('click', addHorario);
+			document.getElementById("enviar").addEventListener("click",valida);
+			if (horario_tmp == ""){
+					console.log ("no hay horario");
+			}else{
+				horario_tmp = JSON.parse(horario_tmp);
+				horarios= horario_tmp;
+				actualizaTabla();
+			}
+
 		}
 	}
 		// if (Array.isArray(horario_tmp)) { 
