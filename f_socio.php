@@ -5,9 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <div class="page-header">
+ <!--  <div class="page-header"> -->
     <title>Saya Club Sport</title>
-  </div>
+  <!-- </div> -->
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilo.css">
@@ -30,6 +30,7 @@
     $cuota="0";
     $corriente_pago="";
     $uid3="";
+    $restriccion="0";
     $uri_foto="";
 
 
@@ -63,7 +64,18 @@
           }
             // esto hay que borrar
 
-          print_r($rawData2);  
+          //print_r($rawData2);  
+
+
+          //-------------------------------------------------------------------------------
+          /* en mo do edicion se descargan las actividades que tiene el socio...
+          */
+           // sql --> SELECT * FROM `act_socios` WHERE dni_socio='111' AND f_fin='0000-00-00'
+
+          // echo "<br><hr>";
+           $inscrito = Db::arrayBusqueda ('act_socios', 'dni_socio', $_GET['dni_socio']);
+           //print_r ($inscrito);
+           //echo "<br><hr>";
             //--------------------
           /* desmierde total ---- si ha datos los cargamos en su variable para mostrar en el formulario */
           if (isset($rawData2['dni_socio'])){ $dni_socio =$rawData2['dni_socio']; }else {$dni_socio ="";};
@@ -77,24 +89,25 @@
           if (isset($rawData2['fecha_inscripcion'])){ $fecha_inscripcion =$rawData2['fecha_inscripcion']; }else {$fecha_inscripcion="";};
           if (isset($rawData2['cuota'])){ $cuota =$rawData2['cuota'];} else{ $cuota="";};
           if (isset($rawData2['corriente_pago'])){ $corriente_pago =$rawData2['corriente_pago']; }else {$corriente_pago="";};
+          if (isset($rawData2['restriccion'])){ $restriccion =$rawData2['restriccion']; }else {$restriccion="";};
           if (isset($rawData2['uid3'])){ $uid3 =$rawData2['uid3'];} else{ $uid3="";};
           if (isset($rawData2['uri_foto'])){ $uri_foto =$rawData2['uri_foto'] ;}else {$uri_foto="";};
   }
       //--------------------------------------
 
-  echo "<br>*  $dni_socio ";
-  echo "<br>*  $nombre ";
-  echo "<br>* $apellido1 ";
-  echo "<br>*  $apellido2 ";
-  echo "<br>* $direccion ";
-  echo "<br>* $telefono ";
-  echo "<br>*  $email ";
-  echo "<br>*  $fecha_nacimiento ";
-  echo "<br>*  $fecha_inscripcion ";
-  echo "<br>*  $cuota ";
-  echo "<br>*  $corriente_pago ";
-  echo "<br>*  $uid3 ";
-  echo "<br>* $uri_foto ";
+  // echo "<br>*  $dni_socio ";
+  // echo "<br>*  $nombre ";
+  // echo "<br>* $apellido1 ";
+  // echo "<br>*  $apellido2 ";
+  // echo "<br>* $direccion ";
+  // echo "<br>* $telefono ";
+  // echo "<br>*  $email ";
+  // echo "<br>*  $fecha_nacimiento ";
+  // echo "<br>*  $fecha_inscripcion ";
+  // echo "<br>*  $cuota ";
+  // echo "<br>*  $corriente_pago ";
+  // echo "<br>*  $uid3 ";
+  // echo "<br>* $uri_foto ";
 
 
   ?>
@@ -105,9 +118,7 @@
 
 
   <div class="container">
-    <div class="page-header">
-      <h1>Saya Club Sport</h1>
-    </div>
+    
     <div class="">
 
       <ul class="nav nav-tabs">
@@ -189,21 +200,49 @@
   <div class="form-group col-xs-2"><label for="fecha_inscripcion">fecha_inscripcion</label><input type="date" id="fecha_inscripcion" name="fecha_inscripcion" class="form-control" value="<?php echo $fecha_inscripcion;?>"></div>
   <div class="form-group col-xs-2"><label for="tarjeta">tarjeta</label><input type="text" id="tarjeta" name="tarjeta" class="form-control" value="<?php echo $uid3;?>"></div>
   <div class="form-group col-xs-1"><label for="cuota">cuota</label><input type="text" id="cuota" name="cuota" class="form-control" value="<?php echo $cuota;?>"></div>
+  
+  <?php
+
+  //------------------------ despues de consultar la base de datos se rellena los select con esto
+    $opcion1=""; $opcion2="";
+      
+    if ($rawData2['restriccion'] == "0")
+    {
+      $opcion1="selected"; $opcion2="";
+    }else
+    {
+       $opcion2="selected";$opcion1="";
+    }
+
+  ?>
   <div class="form-group col-xs-2"><label for="restriccion">Restriccion</label>
     <select class="form-control select-picker" id="restriccion" name="restriccion">
-      <option value="0" selected>no</option>
-      <option value="1">si</option>
+      <option value="0" <?php echo $opcion1 ?> >no</option>
+      <option value="1" <?php echo $opcion2 ?> >si</option>
     </select>
-
   </div>
+ 
+ <?php
+    $opcion1="";
+    $opcion2="";
+    
+    if ($rawData2['corriente_pago'] == "0")
+    {
+      $opcion1="selected"; $opcion2="";
+    }else
+    {
+       $opcion2="selected"; $opcion1="";
+    }
 
+  ?>
   <div class="form-group col-xs-2"><label for="corriente_pago">corriente_pago</label>
     <select class="form-control select-picker" id="corriente_pago" name="corriente_pago">
-      <option value="0" >no</option>
-      <option value="1"selected>si</option>
+      <option value="0" <?php echo $opcion1 ?> >no</option>
+      <option value="1" <?php echo $opcion2 ?> >si</option>
     </select>
-
   </div>
+
+
 </div>
 
 </fieldset>  
@@ -213,13 +252,14 @@
   <fieldset <?php echo $habilitacion ?> >
 
            <?php  // descargamos todas las actividades .... y las presentamos en un multiple select
-               //  require_once ("Db.php");  
+            
            $rawdata =Db::arrayTabla('actividad');
-           //       print_r ($rawdata);
+         //print_r ($rawdata                 );
+
 
            ?>  
            <div class="form-group col-xs-4">
-            <label for="actividad">Seleccione Actividad/Actividades</label>
+            <label for="actividad">Actividades Disponibles</label>
             <select class="select-picker form-control"  id="listaAct" height="300px" multiple>
               <?php foreach ($rawdata as $e){
                 echo "<option value='$e[0]'>$e[0] - $e[1]-($e[2]) </option>";
@@ -237,8 +277,30 @@
             <button type ="button" class="btn-block btn btn-danger" id="subact"> << Quitar Actividad</button>
           </div>
           <div class="form-group col-xs-4">
-            <label for="actividad">Seleccione Actividad/Actividades</label>
+            <label for="actividad">Actividades inscrito</label>
             <select class="select-picker form-control" name=actividad2[] id="listaAct2" multiple> 
+                  <?php 
+                  if ($vista=='editar' || $vista='vista' )
+                  {
+                    foreach ($inscrito as $e){
+                      if ($e['f_fin']=='0000-00-00'){
+                          foreach ($rawdata as $d){
+                            if ($e['id_act'] == $d['id_act'])
+                            {
+                             echo "<option value='$d[0]'>$d[0] - $d[1]-($d[2]) </option>";
+                            }
+                          }
+
+
+
+                       // echo "<option value='".$e['id_act']."'>" . $e['id_act'] ." -". " </option>";                                                
+                     ;
+                      //- $rawdata[$inscrito[1]]-($e[2])
+                     }
+                    }
+
+                   }
+                  ?>
             </select>
             <br>            
           </div>
@@ -249,9 +311,6 @@
           </div>
         </fieldset>
       </div>
-      <br>
-      <br>
-      <br>
       <br>
       <br>
       <div class="row">
@@ -275,7 +334,7 @@
 
         ?>
 
-        <!--   <button type="submit" id="enviar" class="btn btn-default">Submit</button> -->
+       <br><br>
       </div>
     </form>
 
@@ -362,7 +421,35 @@
     }
 
   }
+  //--------------------------------------------------------------------------------------
+  function actualizaListaIz (event)
+  {
+    //alert ("actualiza lista");
+    var lista=document.getElementById('listaAct');
+    var lista2=document.getElementById('listaAct2');
+    var fin=lista.length;
+    var fin2=lista2.length;
 
+
+    for (var i=0; i<fin2; i++)
+    {
+       
+      for (var j=0; j<fin; j++)
+      {
+         console.log ("lista2 " + lista2[i] + "lista1 " + lista[j]);
+        if (lista2[i].value == lista[j].value)
+        {
+          lista.remove(j);
+          fin=lista.length;
+
+        }
+       }
+    }
+
+
+
+   }
+  //--------------------------------------------------------------------------------------
   function guarda_act(event){
     console.log ("dentro de guardar actividad");
     var dni= document.getElementById('dni').value;
@@ -415,6 +502,8 @@
       document.getElementById('calcula').addEventListener("click", calcular);
       document.getElementById('bbdd_act').addEventListener("click", guarda_act);
       document.getElementById('enviar').addEventListener("click", valida);
+      // como estamos en editar... quitamos las actividades que tenga activas
+      actualizaListaIz ();
     }
     
 

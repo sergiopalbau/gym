@@ -30,6 +30,7 @@ if ($_POST)
 		fecha_inscripcion ='". $fechaI ."',
 		cuota =". $cuota .",
 		corriente_pago =". $corriente_pago .",
+		restriccion=".$restriccion.",
 		uid3 ='". $uid ."',
 		uri_foto =''
 		WHERE dni_socio ='". $dni ."'";
@@ -37,7 +38,7 @@ if ($_POST)
 		echo "<br><hr><br>". $sql;
 	}else{
 
-		$sql="INSERT INTO socios(dni_socio, nombre, apellido1, apellido2, direccion, telefono, email, fecha_nacimiento, fecha_inscripcion, cuota, corriente_pago, uid3, uri_foto) VALUES ('$dni','$nombre','$apellido1','$apellido2','$direccion','$telefono','$email','$fechaN','$fechaI',$cuota,$corriente_pago,'$uid','')";
+		$sql="INSERT INTO socios(dni_socio, nombre, apellido1, apellido2, direccion, telefono, email, fecha_nacimiento, fecha_inscripcion, cuota, corriente_pago, restriccion, uid3, uri_foto) VALUES ('$dni','$nombre','$apellido1','$apellido2','$direccion','$telefono','$email','$fechaN','$fechaI',$cuota, $restriccion,$corriente_pago,'$uid','')";
 
 		echo "<br><hr><br>". $sql;
 	}

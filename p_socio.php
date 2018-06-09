@@ -42,6 +42,7 @@
 			      <tr>
 			        <th class= "">Id_socio</th>
 			        <th class="">Nombre</th>
+			        <th class=""> Apellido</th>
 			        <th class="">Tarjeta</th>
 			        <th class="">Opciones </th>
 			      </tr>
@@ -75,6 +76,7 @@
 				      echo "<td>". $rawdata[$i][0]. "</td>";
 				      echo "<td>". $rawdata[$i][1]. "</td>";
 				      echo "<td>". $rawdata[$i][2]. "</td>";
+				      echo "<td>". $rawdata[$i][5]. "</td>";
 				      
 				      echo '<td> <div class="btn-group-xs ">
 				      				<a href="f_socio.php?dni_socio='.$rawdata[$i][0].'&m=v" class="btn btn-info" role="button"><span class="glyphicon glyphicon-eye-open"></a>

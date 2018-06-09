@@ -99,32 +99,36 @@ if (isset ($_POST['dni']))
 //07/06/2018-----------------------------------------
 // Como n podemos borrar las actividades si podemos darle fecha de finalizacion. esta rutina se encarga de eso.
 
+for ($j=0; $j<count($act_bbdd); $j++)
+		{
+			if ($act_bbdd[$j]['f_fin']!="0000-00-00") // si la actividad tiene fecha fin, no hace falta comprobar nada
+			{
+				continue 1;	
+			}
 
-/*
-	//$fechaI= date
-	$sql = "INSERT INTO act_socios VALUES ($id,'$dni','$fechaI',
-	'$fechaF')";
-	
-	$str=Db::ejecutaSentencia($sql);*/
+			for ($i=0; $i<count($actividad);$i++)
+			{
 
 
-}
-/*
-if ($_REQUEST)
-{
-	if (isset($_REQUEST['id_act'])) $id=$_REQUEST['id_act']; else $id="";
-	if (isset($_REQUEST['dni_socio'])) $dni=$_REQUEST['dni_socio']; else $dni="";;
-	if (isset($_REQUEST['fechaI'])) $fechaI=$_REQUEST['fechaI']; else $fechaI="";
-	if (isset($_REQUEST['fechaF'])) $fechaF=$_REQUEST['fechaF']; else $fechaF="";
+				if ($actividad[$i] == $act_bbdd[$j]['id_act'])
+				{
+					continue 2;
+				}
+			}
+			// --- si llegamos aqui significa que el usuario tiene una actividad sin fecha de terminar y que ademoas
+			// no esta en la lista actual de actividades.Por lo tanto vamos a actualizar la fecha de esa actividad de la bbdd
+			$sql= "UPDATE act_socios SET f_fin='$fecha' WHERE id= '".
+			$act_bbdd[$j]['id']."'";
 
-	$sql = "INSERT INTO act_socios VALUES ($id,'$dni','$fechaI',
-	'$fechaF')";
-	require_once("Db.php");
-	$str=Db::ejecutaSentencia($sql);
-	echo $str;
-}else {
-	echo "no hay datos";
-}*/
+			$respuesta =Db::ejecutaSentencia($sql);
+
+		}
+
+
+}// fin if ($dni)
+
+
+
 ?>
 
 <!DOCTYPE html>
