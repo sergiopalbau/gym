@@ -3,6 +3,8 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
+
+
 //pines adicionales a del puerto SPI
 #define SS_PIN 15
 #define RST_PIN 0
@@ -20,17 +22,19 @@ void setup() { //---------------------------------------------------------------
   SPI.begin(); // Init SPI bus
   rfid.PCD_Init(); // Inicializar rfid
 
-  // inicializar formato rfid
+ /* // inicializar formato rfid
   for (byte i = 0; i < 6; i++) {
     key.keyByte[i] = 0xFF;
   }
 
-  printHex(key.keyByte, MFRC522::MF_KEY_SIZE);
-  Serial.println ("");
+  printHex(key.keyByte, MFRC522::MF_KEY_SIZE);*/
+ 
 }
  
 void loop() {//------------------------------------------------------------------------------
-
+  
+  char buffer2[50];     //  Lugar donde se guardara la uid
+  
   // mirar si nueva lectura tarjeta
   if ( ! rfid.PICC_IsNewCardPresent())
     return;
@@ -39,15 +43,11 @@ void loop() {//-----------------------------------------------------------------
   if ( ! rfid.PICC_ReadCardSerial())
     return;
 
- //Serial.println(MFRC522::MF_KEY_SIZE);
-
-    Serial.println ("\n\n vamos a leer que ha leido\n\n");
-    for (byte i = 0; i < 4; i++) {
-      Serial.print( rfid.uid.uidByte[i],HEX);
-      Serial.print(".");
-    }
-
-  
+    
+    // simplificacion proceso lectura.
+    sprintf(buffer2,"%02x%02x%02x%02x",(rfid.uid.uidByte[0]),(rfid.uid.uidByte[1]),(rfid.uid.uidByte[2]),(rfid.uid.uidByte[3]));
+    Serial.printf ("tarjeta leida:\t %s \n",buffer2);
+   
   // Halt PICC
   rfid.PICC_HaltA();
 
@@ -56,14 +56,7 @@ void loop() {//-----------------------------------------------------------------
 }
 
 
-/**----------------------------------------------------------------------------------------------------
- * Helper routine to dump a byte array as hex values to Serial. 
- */
-void printHex(byte *buffer, byte bufferSize) {
-  for (byte i = 0; i < bufferSize; i++) {
-    Serial.print(buffer[i] < 0x10 ? " 0" : " ");
-    Serial.print(buffer[i], HEX);
-  }
-}
+
+
 
 
