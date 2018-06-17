@@ -17,7 +17,6 @@ function genera_tabla() {
     $(input1).attr("type", "hidden").attr("name", "dia[]").val(dia);
     $(input2).attr("type", "hidden").attr("name", "desde[]").val(desde);
     $(input3).attr("type", "hidden").attr("name", "hasta[]").val(hasta);
-
     $(td1).append(dia).append(input1);
     $(td2).append(desde).append(input2);
     $(td3).append(hasta).append(input3);

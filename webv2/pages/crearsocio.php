@@ -8,7 +8,8 @@
 	<script src="../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../assets/js/popper.min.js"></script>
 	<script src="../assets/js/bootstrap.min.js"></script>
-	<?php require '../controllers/phpcrearstaff.php'; ?>
+	<script src="../assets/js/electacti.js"></script>
+	<?php require '../controllers/phpcrearsocio.php'; ?>
 </head>
 <body>
 	<div class="row mt-3">
@@ -21,10 +22,10 @@
 					<a href="actividades.php" class="nav-link ">Actividades</a>
 				</li>
 				<li class="nav-item">
-					<a href="socios.php" class="nav-link ">Socios</a>
+					<a href="socios.php" class="nav-link active">Socios</a>
 				</li>
 				<li class="nav-item">
-					<a href="staff.php" class="nav-link active">Staff</a>
+					<a href="staff.php" class="nav-link ">Staff</a>
 				</li>
 			</ul>
 		</div>
@@ -35,7 +36,7 @@
 				<h2>Staff</h2>
 			</div>
 		</div>
-		<form action="../controllers/phpcrearstaff.php" method="post">
+		<form action="../controllers/phpcrearsocio.php" method="post">
 			<fieldset>
 				<legend> Datos personales</legend>
 				<hr>
@@ -47,8 +48,8 @@
 								<input type="text" name="dni" id="dni" class="form-control" required>
 							</div>
 							<div class="form-group col-3 col-md-offset-2">
-								<label for="tarjeta">Tarjeta</label>
-								<input type="text" name="tarjeta" id="tarjeta" class="form-control" required>
+								<label for="fecha">fecha de nacimiento</label>
+								<input type="date" name="fecha" id="fecha" class="form-control" required>
 							</div>
 						</div>
 						<div class="row">
@@ -77,6 +78,10 @@
 				<hr>
 				<div class="row">
 					<div class="form-group col-4">
+						<label for="direccion">direccion</label>
+						<input type="text" name="direccion" id="direccion" class="form-control">
+					</div>
+					<div class="form-group col-4">
 						<label for="email">Email</label>
 						<input type="email" name="email" id="email" class="form-control">
 					</div>
@@ -84,25 +89,79 @@
 						<label for="telefono">Telefono</label>
 						<input type="tel" name="telefono" id="telefono" class="form-control">
 					</div>
-					<div class="form-group col-4">
-						<label for="perfil">Perfil</label>
-						<select name="perfil" id="perfil" class="form-control select-picker">
-							<option value="admin">admin</option>
-							<option value="monitor">monitor</option>
-							<option value="recepcion">recepcion</option>
-							<option value="limpieza">limpieza</option>
-							<option value="temporal">temporal</option>
-						</select>
-					</div>
 				</div>
 			</fieldset>
 			<br><br>
+			<fieldset>
+				<legend>Relacion con el Club</legend>
+				<div class="row">
+					<div class="form-group col-2">
+						<label for="inscripcion">Fecha de inscripcion</label>
+						<input type="date" name="inscripcion" id="inscripcion" class="form-control">
+					</div>
+					<div class="form-group col-2">
+						<label for="tarjeta">tarjeta</label>
+						<input type="text" name="tarjeta" id="tarjeta" class="form-control">
+					</div>
+					<div class="form-group col-2">
+						<label for="cuota">Cuota</label>
+						<input type="number" name="cuota" id="cuota" class="form-control" >
+					</div>
+					<div class="form-group col-2">
+						<label for="restriccion">Restriccion</label>
+				    <select class="form-control select-picker" id="restriccion" name="restriccion">
+				      <option value="0">no</option>
+				      <option value="1">si</option>
+				    </select>
+  				</div>
+  				<div class="form-group col-2">
+  					<label for="corriente">corriente de pago</label>
+				    <select class="form-control select-picker" id="corriente" name="corriente">
+				      <option value="0" >no</option>
+				      <option value="1" >si</option>
+				    </select>
+				  </div>
+
+				</div>
+			</fieldset>
+			<br><br>
+				<fieldset>
+					<legend>Horarios</legend>
+			<div class="row">
+				<?php require '../controllers/phpdescacti.php'; ?>
+					<div class="form-group col-4 ">
+						<br>
+						<select name="actividad" id="actividad" class="form-control select-picker">
+							<option value="total">Total</option>
+							<option value="mañanas">Mañanas</option>
+							<option value="tardes">Tardes</option>
+							<?php 
+							for ($i = 0;$i < count($nombre); $i++ ) {
+								print("<option value='".$nombre[$i]."'>".$nombre[$i]."</option>");
+							}
+							?>
+						</select>
+					</div>
+					<div class="form-group col-2">
+						<br>
+						<button type="button" onclick="add()" class="btn btn-success" >Añadir</button>
+					</div>
+					<div class="form-group col-6">
+						<table class="table table-bordered">
+							<th class="text-center">Actividad</th>
+							<th class="text-center">Opciones</th>
+
+						</table>
+					</div>
+			</div>
+				</fieldset>
+				<br><br>
 			<div class="row justify-content-between">
 				<div class="col-3">
 					<input type="submit" value="registrar" name="registrar" id="registrar" class="btn btn-primary">
 				</div>
 				<div class="col-3 text-right">
-					<a href="staff.php" class="btn btn-danger">Volver</a>
+					<a href="socios.php" class="btn btn-danger">Volver</a>
 				</div>
 			</div>
 			
