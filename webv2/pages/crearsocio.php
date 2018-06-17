@@ -136,8 +136,8 @@
 							<option value="mañanas">Mañanas</option>
 							<option value="tardes">Tardes</option>
 							<?php 
-							for ($i = 0;$i < count($nombre); $i++ ) {
-								print("<option value='".$nombre[$i]."'>".$nombre[$i]."</option>");
+							for ($i = 0;$i < count($actis); $i++ ) {
+								print("<option value='".$actis[$i]."'>".$actis[$i]."</option>");
 							}
 							?>
 						</select>

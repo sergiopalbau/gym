@@ -45,7 +45,7 @@
 					<div class="row">
 						<div class="form-group col-2">
 							<label for="dni">Dni</label>
-							<input type="text" readonly name="id" id="id" class="form-control" value="<?php echo $dni ; ?>">
+							<input type="text" readonly name="dni" id="dni" class="form-control" value="<?php echo $dni ; ?>">
 						</div>
 						<div class="form-group col-3 col-md-offset-2">
 							<label for="fecha">fecha de nacimiento</label>
@@ -151,11 +151,13 @@
 		</fieldset>
 		<div class="row justify-content-between">
 			<div class="col-3">
-					<input type="submit" value="actualizar" name="actualizar" id="actualizar" class="btn btn-primary">
+				<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
+				<input type="submit" value="actualizar" name="actualizar" id="actualizar" class="btn btn-primary">
 				</div>
-			<div class="col-3 text-right">
-				<a href="socios.php" class="btn btn-danger">Volver</a>
-			</div>
+				<div class="col-3 text-right">
+					<a href="socios.php" class="btn btn-danger">Volver</a>
+					<input type="submit" value= "eliminar" name = "eliminar" class="btn btn-secondary">
+				</div>
 		</div>
 	</div>
 

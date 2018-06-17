@@ -56,6 +56,22 @@ if (isset($_POST['actualizar'])) {
 	$usuario = 'dwes';
 	$contrasena = 'abc123.';
 	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
-	$sql = "UPDATE socios SET nombre='".$nombre. "',apellido1='".$apellido1."',apellido2='".$apellido2."',direccion='".$direccion."',telefono='".$telefono."',email='".$email."',fecha_nacimiento='".$nacimiento."',fecha_inscripcion='".$inscripcion."', cuota=".  $cuota .", uid3='".$tarjeta."',actividades='".json_encode($actividades)."'  WHERE dni_socio=".$id.";";
+	$sql = "UPDATE socios SET nombre='".$nombre. "',apellido1='".$apellido1."',apellido2='".$apellido2."',direccion='".$direccion."',telefono='".$telefono."',email='".$email."',fecha_nacimiento='".$nacimiento."',fecha_inscripcion='".$inscripcion."', cuota=".  $cuota .", uid3='".$tarjeta."',actividades='".json_encode($actividades)."'  WHERE dni_socio='".$id."';";
+	$resultado = $bd->query($sql);
+	if($resultado){
+		header('Location: ../pages/socios.php');
+	}
+}else if (isset($_POST['eliminar'])) {
+	$id = $_POST['id'];
+	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+	$dsn = "mysql:host=localhost;dbname=saya";
+	$usuario = 'dwes';
+	$contrasena = 'abc123.';
+	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	$sql = "DELETE FROM socios WHERE dni_socio='".$id."';";
+	$resultado = $bd->query($sql);
+	if($resultado){
+		header('Location: ../pages/socios.php');
+	}
 }
 ?>
