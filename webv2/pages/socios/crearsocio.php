@@ -4,28 +4,28 @@
 	<meta charset="UTF-8">
 	<title>Saya Club Sport</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<script src="../assets/js/jquery-3.2.1.min.js"></script>
-	<script src="../assets/js/popper.min.js"></script>
-	<script src="../assets/js/bootstrap.min.js"></script>
-	<script src="../assets/js/electacti.js"></script>
-	<?php require '../controllers/phpcrearsocio.php'; ?>
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+	<script src="../../assets/js/jquery-3.2.1.min.js"></script>
+	<script src="../../assets/js/popper.min.js"></script>
+	<script src="../../assets/js/bootstrap.min.js"></script>
+	<script src="../../assets/js/electacti.js"></script>
+	<?php require '../../controllers/socios/phpcrearsocio.php'; ?>
 </head>
 <body>
 	<div class="row mt-3">
 		<div class="col">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="index.html" class="nav-link ">Inicio</a>
+					<a href="../index.html" class="nav-link ">Inicio</a>
 				</li>
 				<li class="nav-item">
-					<a href="actividades.php" class="nav-link ">Actividades</a>
+					<a href="../actividades/actividades.php" class="nav-link ">Actividades</a>
 				</li>
 				<li class="nav-item">
 					<a href="socios.php" class="nav-link active">Socios</a>
 				</li>
 				<li class="nav-item">
-					<a href="staff.php" class="nav-link ">Staff</a>
+					<a href="../staff/staff.php" class="nav-link ">Staff</a>
 				</li>
 			</ul>
 		</div>
@@ -36,7 +36,7 @@
 				<h2>Staff</h2>
 			</div>
 		</div>
-		<form action="../controllers/phpcrearsocio.php" method="post">
+		<form action="../../controllers/socios/phpcrearsocio.php" method="post">
 			<fieldset>
 				<legend> Datos personales</legend>
 				<hr>
@@ -68,7 +68,7 @@
 						</div>
 					</div>
 					<div class="col-2 align-items-center">
-						<img src="../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
+						<img src="../../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
 					</div>
 				</div>
 			</fieldset>
@@ -128,7 +128,7 @@
 				<fieldset>
 					<legend>Horarios</legend>
 			<div class="row">
-				<?php require '../controllers/phpdescacti.php'; ?>
+				<?php require '../../controllers/phpdescacti.php'; ?>
 					<div class="form-group col-4 ">
 						<br>
 						<select name="actividad" id="actividad" class="form-control select-picker">

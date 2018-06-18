@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<?php require '../controllers/phpeditacti.php'; ?>
+	<?php require '../../controllers/actividades/phpeditacti.php'; ?>
 	<meta charset="UTF-8">
-	<title>Editar actividad</title>
-	<script src="../assets/js/jquery-3.2.1.min.js"></script>
-	<script src="../assets/js/popper.min.js"></script>
-	<script src="../assets/js/bootstrap.min.js"></script>
+	<title>Saya Club Sport</title>
+	<script src="../../assets/js/jquery-3.2.1.min.js"></script>
+	<script src="../../assets/js/popper.min.js"></script>
+	<script src="../../assets/js/bootstrap.min.js"></script>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<script src="../assets/js/horarios.js"></script>
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+	<script src="../../assets/js/horarios.js"></script>
 </head>
 <body>
 	<div class="row mt-3">
 		<div class="col">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="index.html" class="nav-link ">Inicio</a>
+					<a href="../index.html" class="nav-link ">Inicio</a>
 				</li>
 				<li class="nav-item">
 					<a href="actividades.php" class="nav-link active">Actividades</a>
 				</li>
 				<li class="nav-item">
-					<a href="socios.php" class="nav-link ">Socios</a>
+					<a href="../socios/socios.php" class="nav-link ">Socios</a>
 				</li>
 				<li class="nav-item">
-					<a href="staff.php" class="nav-link ">Staff</a>
+					<a href="../staff/staff.php" class="nav-link ">Staff</a>
 				</li>
 			</ul>
 		</div>
@@ -83,16 +83,20 @@
 					<th>Dia de la semana</th>
 					<th>Inicio Horario</th>
 					<th>Fin horario</th>
-					<?php require '../controllers/verhorario.php'; ?>
+					<?php require '../../controllers/verhorario.php'; ?>
 
 				</table>
-				<input type="hidden" name="id" value=" <?php echo $id; ?> ">
-				<div class="form-group">
-					<input type="submit" value="actualizar" name="actualizar" class="btn btn-primary">
-				
-				<a href="actividades.php" class="btn btn-danger">Volver</a>
-				<input type="submit" value="eliminar" name="eliminar" class="btn btn-warning text-right" >
+				<br><br><br>
+				<div class="row justify-content-between">
+			<div class="col-3">
+				<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
+				<input type="submit" value="actualizar" name="actualizar" id="actualizar" class="btn btn-primary">
 				</div>
+				<div class="col-3 text-right">
+					<a href="actividades.php" class="btn btn-danger">Volver</a>
+					<input type="submit" value= "eliminar" name = "eliminar" class="btn btn-secondary">
+				</div>
+		</div>
 			</div>
 		</div>
 				</form>

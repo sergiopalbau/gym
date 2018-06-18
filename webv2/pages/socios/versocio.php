@@ -4,27 +4,27 @@
 	<meta charset="UTF-8">
 	<title>Saya Club Sport</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<script src="../assets/js/jquery-3.2.1.min.js"></script>
-	<script src="../assets/js/popper.min.js"></script>
-	<script src="../assets/js/bootstrap.min.js"></script>
-	<?php require '../controllers/phpversocio.php'; ?>
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+	<script src="../../assets/js/jquery-3.2.1.min.js"></script>
+	<script src="../../assets/js/popper.min.js"></script>
+	<script src="../../assets/js/bootstrap.min.js"></script>
+	<?php require '../../controllers/socios/phpversocio.php'; ?>
 </head>
 <body>
 	<div class="row mt-3">
 		<div class="col">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="index.html" class="nav-link ">Inicio</a>
+					<a href="../index.html" class="nav-link ">Inicio</a>
 				</li>
 				<li class="nav-item">
-					<a href="actividades.php" class="nav-link ">Actividades</a>
+					<a href="../actividades/actividades.php" class="nav-link ">Actividades</a>
 				</li>
 				<li class="nav-item">
 					<a href="socios.php" class="nav-link active">Socios</a>
 				</li>
 				<li class="nav-item">
-					<a href="staff.php" class="nav-link ">Staff</a>
+					<a href="../staff/staff.php" class="nav-link ">Staff</a>
 				</li>
 			</ul>
 		</div>
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 				<div class="col-2 align-items-center">
-					<img src="../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
+					<img src="../../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
 				</div>
 			</div>
 		</fieldset>
@@ -124,7 +124,7 @@
 					<table class="table table-bordered">
 						<th class="text-center">Actividad</th>
 						<th class="text-center">Opciones</th>
-						<?php require '../controllers/phpveractividad.php'; ?>
+						<?php require '../../controllers/phpveractividad.php'; ?>
 					</table>
 				</div>
 			</div>

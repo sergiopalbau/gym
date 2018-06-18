@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php require '../controllers/phpveracti.php'; ?>
+	<?php require '../../controllers/actividades/phpveracti.php'; ?>
 	<meta charset="UTF-8">
-	<title>Ver actividad</title>
-	<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../assets/js/popper.min.js"></script>
-	<script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+	<title>Saya Club Sport</title>
+	<script type="text/javascript" src="../../assets/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/popper.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="row mt-3">
 		<div class="col">
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="index.html" class="nav-link ">Inicio</a>
+					<a href="../index.html" class="nav-link ">Inicio</a>
 				</li>
 				<li class="nav-item">
 					<a href="actividades.php" class="nav-link active">Actividades</a>
 				</li>
 				<li class="nav-item">
-					<a href="socios.php" class="nav-link ">Socios</a>
+					<a href="../socios/socios.php" class="nav-link ">Socios</a>
 				</li>
 				<li class="nav-item">
-					<a href="staff.php" class="nav-link ">Staff</a>
+					<a href="../staff/staff.php" class="nav-link ">Staff</a>
 				</li>
 			</ul>
 		</div>
@@ -58,9 +58,9 @@
 					<th>Dia de la semana</th>
 					<th>Inicio Horario</th>
 					<th>Fin horario</th>
-					<?php require '../controllers/verhorario.php' ?>
+					<?php require '../../controllers/verhorario.php' ?>
 				</table>
-				<a href='../pages/actividades.php' class='btn btn-danger '>Volver</a>
+				<a href='actividades.php' class='btn btn-danger '>Volver</a>
 			</div>
 		</div>
 	</div>

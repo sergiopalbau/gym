@@ -2,31 +2,31 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Socios</title>
-	<link rel="stylesheet" type="text/css" href="../assets/css/datatables.min.css"/>
-	<script type="text/javascript" src="../assets/js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="../assets/js/popper.min.js"></script>
-	<script type="text/javascript" src="../assets/js/datatables.min.js"></script>
-	<script type="text/javascript" src="../assets/js/tabla.js"></script>
-	<script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+	<title>Saya Club Sport</title>
+	<link rel="stylesheet" type="text/css" href="../../assets/css/datatables.min.css"/>
+	<script type="text/javascript" src="../../assets/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/popper.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/datatables.min.js"></script>
+	<script type="text/javascript" src="../../assets/js/tabla.js"></script>
+	<script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="row mt-3">
 			<div class="col">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a href="index.html" class="nav-link ">Inicio</a>
+						<a href="../index.html" class="nav-link ">Inicio</a>
 					</li>
 					<li class="nav-item">
-						<a href="actividades.php" class="nav-link">Actividades</a>
+						<a href="../actividades/actividades.php" class="nav-link">Actividades</a>
 					</li>
 					<li class="nav-item">
 						<a href="socios.php" class="nav-link active">Socios</a>
 					</li>
 					<li class="nav-item">
-						<a href="staff.php" class="nav-link ">Staff</a>
+						<a href="../staff/staff.php" class="nav-link ">Staff</a>
 					</li>
 				</ul>
 			</div>
@@ -50,7 +50,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php require '../controllers/phpsocios.php'; ?>
+						<?php require '../../controllers/socios/phpsocios.php'; ?>
 					</tbody>
 				</table>
 			</div>
