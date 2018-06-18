@@ -287,7 +287,13 @@
 			modo="form";
 			document.getElementById("btt_horario").addEventListener ('click', addHorario);
 			document.getElementById("enviar").addEventListener("click",valida);
-
+			if (horario_tmp == ""){
+					console.log ("no hay horario");
+			}else{
+				horario_tmp = JSON.parse(horario_tmp);
+				horarios= horario_tmp;
+				actualizaTabla();
+			}
 		}else if (modo=="vista"){
 			btt_ctrl="hide";
 			if (horario_tmp == ""){
