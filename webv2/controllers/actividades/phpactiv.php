@@ -1,11 +1,6 @@
 <?php 
 //conexion
-$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-$dsn = "mysql:host=localhost;dbname=saya";
-$usuario = 'dwes';
-$contrasena = 'abc123.';
-$bd = new PDO($dsn, $usuario, $contrasena, $opc);
-
+require '../../controllers/db.php';
 $sql = "SELECT * FROM  actividad";
 $resultado = $bd->query($sql);
 if ($resultado) {
@@ -21,8 +16,8 @@ while ($data !=null) {
 						print("<td>".$cuota."</td>");
 						print("<td>
 										<div class='button-group'>
-											<a href='../pages/veracti.php?id=".$id."' class='btn btn-success'>Ver</a>
-											<a href='../pages/editacti.php?id=".$id."' class='btn btn-warning'>Editar</a>
+											<a href='../../pages/actividades/veracti.php?id=".$id."' class='btn btn-success'>Ver</a>
+											<a href='../../pages/actividades/editacti.php?id=".$id."' class='btn btn-warning'>Editar</a>
 										</div>
 									</td>");
 						print("</tr>");

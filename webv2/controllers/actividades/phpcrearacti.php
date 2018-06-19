@@ -18,15 +18,11 @@ if (isset($_POST['registrar'])) {
 			"hasta" => $_POST['hasta'][$i]);
 	}
 	
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "INSERT INTO actividad (id_act, nombre, cuota, restriccion, horario) VALUES ('" . ''. "','". $nombre. "',".  $cuota. ","  .  $res . ",'" . json_encode($horario) ."')";
 	$resultado = $bd->query($sql);
 	if($resultado){
-		header('Location: ../pages/actividades.php');
+		header('Location: ../../pages/actividades/actividades.php');
 	}
 
 }

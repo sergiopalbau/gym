@@ -12,7 +12,7 @@
 	<?php require '../../controllers/socios/phpeditsocio.php'; ?>
 </head>
 <body>
-	<form action="../controllers/socios/phpeditsocio.php" method="post">
+	<form action="../../controllers/socios/phpeditsocio.php" method="post" enctype="multipart/form-data">
 	<div class="row mt-3">
 		<div class="col">
 			<ul class="nav nav-tabs">
@@ -68,7 +68,8 @@
 					</div>
 				</div>
 				<div class="col-2 align-items-center">
-					<img src="../../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
+					<img src="<?php echo $uri_foto; ?>" class="profile rounded" style="width:150px;height:150px;" alt="foto" id="imagen">
+						<input type="file" name="foto" id="foto" accept="image/png, .jpeg, .jpg, image/gif" onchange="loadFile(event)" required>
 				</div>
 			</div>
 		</fieldset>

@@ -8,16 +8,15 @@ if (isset($_POST['registrar'])) {
 	$email = $_POST['email'];
 	$telefono = $_POST['telefono'];
 	$perfil = $_POST['perfil'];
-	
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
-	$sql = "INSERT INTO staff (dni_staff, nombre, apellido1, apellido2, perfil, uid2) VALUES ('".$dni."','".$nombre."','".$apellido1."','".$apellido2."','".$perfil."','".$tarjeta."');";
+	$dir_subida = "../../assets/img/";
+	$fichero_subido = $dir_subida . basename($_FILES['foto']['name']);
+	move_uploaded_file($_FILES['foto']['tmp_name'], $fichero_subido);
+  $uri_foto = $dir_subida . basename($_FILES['foto']['name']);
+	require '../../controllers/db.php';
+	$sql = "INSERT INTO staff (dni_staff, nombre, apellido1, apellido2, perfil, uid2, foto_uri) VALUES ('".$dni."','".$nombre."','".$apellido1."','".$apellido2."','".$perfil."','".$tarjeta."','".$uri_foto."');";
 	$resultado = $bd->query($sql);
 	if($resultado){
-		header('Location: ../pages/staff.php');
+		header('Location: ../../pages/staff/staff.php');
 	}
 
 }

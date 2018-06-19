@@ -8,6 +8,7 @@
 	<script src="../../assets/js/jquery-3.2.1.min.js"></script>
 	<script src="../../assets/js/popper.min.js"></script>
 	<script src="../../assets/js/bootstrap.min.js"></script>
+	<script src="../../assets/js/electacti.js"></script>
 	<?php require '../../controllers/staff/phpeditstaff.php'; ?>
 </head>
 <body>
@@ -35,7 +36,7 @@
 				<h2>Staff</h2>
 			</div>
 		</div>
-		<form action="../../controllers/staff/phpeditstaff.php" method="post">
+		<form action="../../controllers/staff/phpeditstaff.php" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend> Datos personales</legend>
 				<hr>
@@ -67,8 +68,9 @@
 						</div>
 					</div>
 					<div class="col-2 align-items-center">
-						<img src="../../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
-					</div>
+					<img src="<?php echo $uri_foto; ?>" class="profile rounded" style="width:150px;height:150px;" alt="foto" id="imagen">
+						<input type="file" name="foto" id="foto" accept="image/png, .jpeg, .jpg, image/gif" onchange="loadFile(event)" required>
+				</div>
 				</div>
 			</fieldset>
 			<br><br>

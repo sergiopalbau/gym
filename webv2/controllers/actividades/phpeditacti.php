@@ -1,13 +1,9 @@
 <?php
 $id = $_GET['id'];
 if (!isset($id)) {
-	header('Location: ../pages/actividades.php');
+	header('Location: ../../pages/actividades/actividades.php');
 }else{
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "SELECT * FROM  actividad WHERE id_act='".$id."';";
 	$resultado = $bd->query($sql);
 	if ($resultado) {
@@ -37,29 +33,21 @@ if (isset($_POST['actualizar'])) {
 			"hasta" => $_POST['hasta'][$i]);
 	}
 	
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "UPDATE actividad SET nombre='".$_POST['nombre']. "',cuota=".  $_POST['cuota'] .",restriccion=" .  $res . ",horario='".json_encode($horario)."'  WHERE id_act=".$id.";";
 	
 	$resultado = $bd->query($sql);
 	if($resultado){
-		header('Location: ../pages/actividades.php');
+		header('Location: ../../pages/actividades/actividades.php');
 	}
 	
 }else if (isset($_POST['eliminar'])) {
 	$id = $_POST['id'];
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "DELETE FROM actividad WHERE id_act=".$id.";";
 	$resultado = $bd->query($sql);
 	if($resultado){
-		header('Location: ../pages/actividades.php');
+		header('Location: ../../pages/actividades/actividades.php');
 	}
 
 }

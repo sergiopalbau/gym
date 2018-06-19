@@ -1,13 +1,9 @@
 <?php
 if (!isset($_GET['id'])) {
-	header('Location: ../pages/staff.php');
+	header('Location: ../../pages/socios/socios.php');
 }else{
 	$id = $_GET['id'];
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "SELECT * FROM  socios WHERE dni_socio='".$id."';";
 	$resultado = $bd->query($sql);
 	if ($resultado) {
@@ -24,6 +20,7 @@ if (!isset($_GET['id'])) {
 		$cuota = $data['cuota'];
 		$tarjeta = $data['uid3'];
 		$actividades = $data['actividades'];
+		$uri_foto = $data['uri_foto'];
 		if($data['corriente_pago'] == 1){
 			$corriente = "Si";
 			}else{

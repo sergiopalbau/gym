@@ -32,7 +32,7 @@
 	<div class="container">
 		<div class="row my-3">
 			<div class="col">
-				<h2>Staff</h2>
+				<h2>Socio</h2>
 			</div>
 		</div>
 		<fieldset>
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 				<div class="col-2 align-items-center">
-					<img src="../../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
+					<img src="<?php echo $uri_foto; ?>"class="profile rounded" style="width:150px;height:150px;" alt="foto" id="imagen">
 				</div>
 			</div>
 		</fieldset>

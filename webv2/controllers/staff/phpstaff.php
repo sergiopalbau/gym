@@ -1,9 +1,5 @@
 <?php
-$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-$dsn = "mysql:host=localhost;dbname=saya";
-$usuario = 'dwes';
-$contrasena = 'abc123.';
-$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+require '../../controllers/db.php';
 
 $sql = "SELECT * FROM  staff";
 $resultado = $bd->query($sql);
@@ -23,8 +19,8 @@ while ($data !=null) {
 						print("<td>".$uid."</td>");
 						print("<td>
 										<div class='button-group'>
-											<a href='../pages/verstaff.php?id=".$dni."' class='btn btn-success'>Ver</a>
-											<a href='../pages/editstaff.php?id=".$dni."' class='btn btn-warning'>Editar</a>
+											<a href='../../pages/staff/verstaff.php?id=".$dni."' class='btn btn-success'>Ver</a>
+											<a href='../../pages/staff/editstaff.php?id=".$dni."' class='btn btn-warning'>Editar</a>
 										</div>
 									</td>");
 						print("</tr>");

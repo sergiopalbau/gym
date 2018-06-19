@@ -33,14 +33,15 @@
 	<div class="container">
 		<div class="row my-3">
 			<div class="col">
-				<h2>Staff</h2>
+				<h2>Socio</h2>
 			</div>
 		</div>
-		<form action="../../controllers/socios/phpcrearsocio.php" method="post">
+		<form action="../../controllers/socios/phpcrearsocio.php" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend> Datos personales</legend>
 				<hr>
 				<div class="row">
+
 					<div class="col-10">
 						<div class="row">
 							<div class="form-group col-2">
@@ -52,7 +53,7 @@
 								<input type="date" name="fecha" id="fecha" class="form-control" required>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row mt-4">
 							<div class="form-group col-4">
 								<label for="nombre">Nombre</label>
 								<input type="text" name="nombre" id="nombre" class="form-control" required>
@@ -68,7 +69,8 @@
 						</div>
 					</div>
 					<div class="col-2 align-items-center">
-						<img src="../../assets/img/hombre.png"class="rounded-circle" style="width:100%" alt="">
+						<img src="../../assets/img/hombre.png" class="profile rounded" style="width:150px;height:150px;" alt="foto" id="imagen">
+						<input type="file" name="foto" id="foto" accept="image/png, .jpeg, .jpg, image/gif" onchange="loadFile(event)" required>
 					</div>
 				</div>
 			</fieldset>
@@ -109,26 +111,26 @@
 					</div>
 					<div class="form-group col-2">
 						<label for="restriccion">Restriccion</label>
-				    <select class="form-control select-picker" id="restriccion" name="restriccion">
-				      <option value="0">no</option>
-				      <option value="1">si</option>
-				    </select>
-  				</div>
-  				<div class="form-group col-2">
-  					<label for="corriente">corriente de pago</label>
-				    <select class="form-control select-picker" id="corriente" name="corriente">
-				      <option value="0" >no</option>
-				      <option value="1" >si</option>
-				    </select>
-				  </div>
+						<select class="form-control select-picker" id="restriccion" name="restriccion">
+							<option value="0">no</option>
+							<option value="1">si</option>
+						</select>
+					</div>
+					<div class="form-group col-2">
+						<label for="corriente">corriente de pago</label>
+						<select class="form-control select-picker" id="corriente" name="corriente">
+							<option value="0" >no</option>
+							<option value="1" >si</option>
+						</select>
+					</div>
 
 				</div>
 			</fieldset>
 			<br><br>
-				<fieldset>
-					<legend>Horarios</legend>
-			<div class="row">
-				<?php require '../../controllers/phpdescacti.php'; ?>
+			<fieldset>
+				<legend>Horarios</legend>
+				<div class="row">
+					<?php require '../../controllers/phpdescacti.php'; ?>
 					<div class="form-group col-4 ">
 						<br>
 						<select name="actividad" id="actividad" class="form-control select-picker">
@@ -153,9 +155,9 @@
 
 						</table>
 					</div>
-			</div>
-				</fieldset>
-				<br><br>
+				</div>
+			</fieldset>
+			<br><br>
 			<div class="row justify-content-between">
 				<div class="col-3">
 					<input type="submit" value="registrar" name="registrar" id="registrar" class="btn btn-primary">

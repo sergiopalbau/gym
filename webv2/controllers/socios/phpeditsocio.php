@@ -1,13 +1,9 @@
 <?php 
 $id = $_GET['id'];
 if (!isset($id)) {
-	header('Location: ../pages/socios.php');
+	header('Location: ../../pages/socios/socios.php');
 }else{
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "SELECT * FROM  socios WHERE dni_socio='".$id."';";
 	$resultado = $bd -> query($sql);
 	if ($resultado) {
@@ -24,6 +20,7 @@ if (!isset($id)) {
 		$cuota = $data['cuota'];
 		$tarjeta = $data['uid3'];
 		$actividades = $data['actividades'];
+		$uri_foto = $data['uri_foto'];
 		if($data['corriente_pago'] == 1){
 			$corriente = "Si";
 			}else{
@@ -46,32 +43,31 @@ if (isset($_POST['actualizar'])) {
 	$corriente = $_POST['corriente'];
 	$tarjeta = $_POST['tarjeta'];
 	$actividades = array();
+	$dir_subida = "../../assets/img/";
+	$fichero_subido = $dir_subida . basename($_FILES['foto']['name']);
+	move_uploaded_file($_FILES['foto']['tmp_name'], $fichero_subido);
+  $uri_foto = $dir_subida . basename($_FILES['foto']['name']);
+
 	for ($i=0; $i < count($_POST['actividades']); $i++) { 
 		$actividades [] = array(
 			'actividad' => $_POST['actividades'][$i]
 		);
 	}
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
-	$sql = "UPDATE socios SET nombre='".$nombre. "',apellido1='".$apellido1."',apellido2='".$apellido2."',direccion='".$direccion."',telefono='".$telefono."',email='".$email."',fecha_nacimiento='".$nacimiento."',fecha_inscripcion='".$inscripcion."', cuota=".  $cuota .", uid3='".$tarjeta."',actividades='".json_encode($actividades)."'  WHERE dni_socio='".$id."';";
+	require '../../controllers/db.php';
+	$sql = "UPDATE socios SET nombre='".$nombre. "',apellido1='".$apellido1."',apellido2='".$apellido2."',direccion='".$direccion."',telefono='".$telefono."',email='".$email."',fecha_nacimiento='".$nacimiento."',fecha_inscripcion='".$inscripcion."', cuota=".  $cuota .", uid3='".$tarjeta."',uri_foto='".$uri_foto."', actividades='".json_encode($actividades)."'  WHERE dni_socio='".$id."';";
 	$resultado = $bd->query($sql);
 	if($resultado){
-		header('Location: ../pages/socios.php');
+		header('Location: ../../pages/socios/socios.php');
 	}
 }else if (isset($_POST['eliminar'])) {
 	$id = $_POST['id'];
-	$opc = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-	$dsn = "mysql:host=localhost;dbname=saya";
-	$usuario = 'dwes';
-	$contrasena = 'abc123.';
-	$bd = new PDO($dsn, $usuario, $contrasena, $opc);
+	require '../../controllers/db.php';
 	$sql = "DELETE FROM socios WHERE dni_socio='".$id."';";
 	$resultado = $bd->query($sql);
 	if($resultado){
-		header('Location: ../pages/socios.php');
+		header('Location: ../../pages/socios/socios.php');
+	}else{
+		echo "error";
 	}
 }
 ?>
